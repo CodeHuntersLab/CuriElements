@@ -41,7 +41,7 @@ class Atoms(QWidget, Ui_Atoms):
 
         alpha = 180 / n
 
-        p = 30
+        p = 60
         path = QPainterPath()
         path.addEllipse(QPointF(0, 0), a, b)
 
@@ -71,7 +71,7 @@ class Atoms(QWidget, Ui_Atoms):
         self.graphicsView.setScene(scene)
 
         gradient = QRadialGradient(center, 150)
-        gradient.setColorAt(0.9, QColor(0, 150, 140))
+        gradient.setColorAt(0.9, QColor(0, 0, 0))
         gradient.setColorAt(0.6, QColor(255, 0, 0))
         gradient.setColorAt(0.1, QColor(0, 0, 0))
         gradient.setColorAt(0, QColor(0, 200, 0))
@@ -86,8 +86,11 @@ class CircleObject(QGraphicsObject):
 
     def paint(self, painter, option, widget):
         pen = QPen(self.color, 1)
-        brush = QBrush(self.color)
         rect = self.boundingRect()
+        gradient = QRadialGradient(rect.center(), rect.width())
+        gradient.setColorAt(0.7, self.color)
+        gradient.setColorAt(0, QColor(255, 255, 255))
+        brush = QBrush(gradient)
         painter.setPen(pen)
         painter.setBrush(brush)
         painter.drawEllipse(rect)
