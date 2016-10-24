@@ -7,6 +7,7 @@ from math import pi, cos, sin
 
 from PyQt5.QtCore import (QParallelAnimationGroup, QPointF, QPropertyAnimation, QRectF, Qt, qrand, qsrand, QTime)
 from PyQt5.QtGui import (QBrush, QColor, QPen, QPainterPath, QTransform)
+from PyQt5.QtGui import QRadialGradient
 from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QWidget)
 
 from Ui_Atoms import Ui_Atoms
@@ -44,18 +45,19 @@ class Atoms(QWidget, Ui_Atoms):
         path = QPainterPath()
         path.addEllipse(QPointF(0, 0), a, b)
 
+        # Lookup table
+        points = [QPointF(a * cos(2 * pi * i / p), b * sin(2 * pi * i / p)) for i in range(p)]
+
         for j in range(n):
             color = QColor(qrand() % 255, qrand() % 255, qrand() % 255)
 
             transform.rotate(alpha)
             scene.addPath(transform.map(path), QPen(color))
 
-            initial = (qrand() % 360) * pi / 180
-            l = []
-            for i in range(p):
-                angle = 2 * pi * i / p + initial
-                point = transform.map(QPointF(a * cos(angle), b * sin(angle)))
-                l.append((i / (p - 1), point))
+            # number % p => 0:p-1
+            initial = (qrand() % p)
+
+            l = [(i / (p - 1), transform.map(points[(i + initial) % p])) for i in range(p)]
 
             item = CircleObject(color=color)
             animation = QPropertyAnimation(item, b'pos')
@@ -67,6 +69,14 @@ class Atoms(QWidget, Ui_Atoms):
         group.start()
         group.finished.connect(group.start)
         self.graphicsView.setScene(scene)
+
+        gradient = QRadialGradient(center, 150)
+        gradient.setColorAt(0.9, QColor(0, 150, 140))
+        gradient.setColorAt(0.6, QColor(255, 0, 0))
+        gradient.setColorAt(0.1, QColor(0, 0, 0))
+        gradient.setColorAt(0, QColor(0, 200, 0))
+
+        self.graphicsView.setBackgroundBrush(QBrush(gradient))
 
 
 class CircleObject(QGraphicsObject):
@@ -83,4 +93,4 @@ class CircleObject(QGraphicsObject):
         painter.drawEllipse(rect)
 
     def boundingRect(self):
-        return QRectF(0, 0, 5, 5)
+        return QRectF(0, 0, 6, 6)
