@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/qhipa/Documents/Projects/Atoms/Atoms.ui'
+# Form implementation generated from reading ui file 'Atoms.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -11,8 +11,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Atoms(object):
     def setupUi(self, Atoms):
         Atoms.setObjectName("Atoms")
+        Atoms.setWindowModality(QtCore.Qt.ApplicationModal)
         Atoms.resize(268, 268)
         self.verticalLayout = QtWidgets.QVBoxLayout(Atoms)
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.graphicsView = QtWidgets.QGraphicsView(Atoms)
         self.graphicsView.setObjectName("graphicsView")
@@ -24,14 +28,4 @@ class Ui_Atoms(object):
     def retranslateUi(self, Atoms):
         _translate = QtCore.QCoreApplication.translate
         Atoms.setWindowTitle(_translate("Atoms", "Atoms"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Atoms = QtWidgets.QWidget()
-    ui = Ui_Atoms()
-    ui.setupUi(Atoms)
-    Atoms.show()
-    sys.exit(app.exec_())
 

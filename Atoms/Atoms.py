@@ -10,7 +10,7 @@ from PyQt5.QtGui import (QBrush, QColor, QPen, QPainterPath, QTransform)
 from PyQt5.QtGui import QRadialGradient
 from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QWidget)
 
-from Ui_Atoms import Ui_Atoms
+from Atoms.Ui_Atoms import Ui_Atoms
 
 
 class Atoms(QWidget, Ui_Atoms):
@@ -28,13 +28,14 @@ class Atoms(QWidget, Ui_Atoms):
         super(Atoms, self).__init__(parent)
         self.setupUi(self)
         scene = QGraphicsScene()
-        scene.setSceneRect(0, 0, 200, 200)
+
+        scene.setSceneRect(0, 0, 150, 150)
         n = 4
         group = QParallelAnimationGroup(self)
         now = QTime.currentTime()
         qsrand(now.msec())
 
-        center = QPointF(100, 100)
+        center = QPointF(75, 75)
         a, b = 100, 20
         transform = QTransform()
         transform.translate(center.x(), center.y())
