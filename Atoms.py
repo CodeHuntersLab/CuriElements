@@ -6,14 +6,11 @@ Module implementing Atoms.
 from math import pi, cos, sin
 
 from PyQt5.QtCore import (QParallelAnimationGroup, QPointF, QPropertyAnimation, QRectF, Qt, qrand, qsrand, QTime)
-from PyQt5.QtGui import (QBrush, QColor, QPen, QPainterPath, QTransform)
-from PyQt5.QtGui import QRadialGradient
-from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QWidget)
-
-from Atoms.Ui_Atoms import Ui_Atoms
+from PyQt5.QtGui import (QBrush, QColor, QPen, QPainterPath, QTransform, QRadialGradient)
+from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QGraphicsView)
 
 
-class Atoms(QWidget, Ui_Atoms):
+class Atoms(QGraphicsView):
     """
     Class documentation goes here.
     """
@@ -26,7 +23,6 @@ class Atoms(QWidget, Ui_Atoms):
         @type QWidget
         """
         super(Atoms, self).__init__(parent)
-        self.setupUi(self)
         scene = QGraphicsScene()
 
         scene.setSceneRect(0, 0, 150, 150)
@@ -36,7 +32,7 @@ class Atoms(QWidget, Ui_Atoms):
         qsrand(now.msec())
 
         center = QPointF(75, 75)
-        a, b = 100, 20
+        a, b = 75, 20
         transform = QTransform()
         transform.translate(center.x(), center.y())
 
@@ -69,7 +65,7 @@ class Atoms(QWidget, Ui_Atoms):
 
         group.start()
         group.finished.connect(group.start)
-        self.graphicsView.setScene(scene)
+        self.setScene(scene)
 
         gradient = QRadialGradient(center, 150)
         gradient.setColorAt(0.9, QColor(0, 0, 0))
@@ -77,7 +73,7 @@ class Atoms(QWidget, Ui_Atoms):
         gradient.setColorAt(0.1, QColor(0, 0, 0))
         gradient.setColorAt(0, QColor(0, 200, 0))
 
-        self.graphicsView.setBackgroundBrush(QBrush(gradient))
+        self.setBackgroundBrush(QBrush(gradient))
 
 
 class CircleObject(QGraphicsObject):

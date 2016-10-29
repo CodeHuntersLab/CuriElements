@@ -2,7 +2,7 @@ from PyQt5.QtCore import (QPoint, QSize, Qt, QRect)
 from PyQt5.QtGui import (QPainter, QPixmap, QRegion)
 from PyQt5.QtWidgets import (QAction, QWidget, qApp,QPushButton)
 
-from Atoms.Atoms import Atoms
+from Atoms import Atoms
 
 
 class BackGround(QWidget):

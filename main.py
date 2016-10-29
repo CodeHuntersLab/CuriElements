@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 
-from Background.Background import BackGround
+from Background import BackGround
 
 if __name__ == '__main__':
     import sys
