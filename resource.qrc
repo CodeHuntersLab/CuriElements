@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="codehunters">img/codehunters.ico</file> 
+    <file alias="background">img/background.png</file>
+    <file alias="close">img/close.png</file> 
+    <file alias="qt">img/qt.png</file>
+  </qresource>
+</RCC>

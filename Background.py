@@ -1,6 +1,7 @@
-from PyQt5.QtCore import (QPoint, QSize, Qt, QRect)
-from PyQt5.QtGui import (QPainter, QPixmap, QRegion)
-from PyQt5.QtWidgets import (QAction, QWidget, qApp,QPushButton)
+from PyQt5.QtCore import (QPoint, QRect, QSize, Qt)
+from PyQt5.QtGui import (QIcon, QPainter, QPixmap, QRegion)
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import (qApp, QAction, QPushButton, QWidget)
 
 from Atoms import Atoms
 
@@ -10,10 +11,13 @@ class Background(QWidget):
         super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
         self.dragPosition = QPoint()
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
-        quitAction = QAction("E&xit", self, shortcut="Ctrl+Q", triggered=qApp.quit)
+        quitAction = QAction("E&xit", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
         self.addAction(quitAction)
+        aboutAction = QAction("A&bout", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
+        self.addAction(aboutAction)
         side = 40
         self.setFixedSize(side * QSize(30, 15))
+        self.setWindowIcon(QIcon(":codehunters"))
 
         region = QRegion(QRect(0, 0, 2 * side, 2 * side), QRegion.Ellipse)
         region += QRegion(QRect(side, 0, 8 * side, 15 * side))
@@ -44,4 +48,9 @@ class Background(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.drawPixmap(self.rect(), QPixmap("background.png"))
+        painter.drawPixmap(self.rect(), QPixmap(":background"))
+
+    def about(self):
+        QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
+
+import resource_rc
