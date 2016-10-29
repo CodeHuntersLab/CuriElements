@@ -5,9 +5,9 @@ from PyQt5.QtWidgets import (QAction, QWidget, qApp,QPushButton)
 from Atoms import Atoms
 
 
-class BackGround(QWidget):
+class Background(QWidget):
     def __init__(self, parent=None):
-        super(BackGround, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
+        super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
         self.dragPosition = QPoint()
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
         quitAction = QAction("E&xit", self, shortcut="Ctrl+Q", triggered=qApp.quit)

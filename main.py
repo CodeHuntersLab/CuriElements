@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication
 
-from Background import BackGround
+from Background import Background
 
 if __name__ == '__main__':
     import sys
@@ -11,6 +11,6 @@ if __name__ == '__main__':
     app.setOrganizationName('CodeHuntersLab')
     app.setOrganizationDomain('CodeHuntersLab.com')
     app.setApplicationVersion('1.0')
-    w = BackGround()
+    w = Background()
     w.show()
     sys.exit(app.exec_())
