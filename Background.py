@@ -1,9 +1,12 @@
+import csv
+
 from PyQt5.QtCore import (QPoint, QRect, QSize, Qt)
 from PyQt5.QtGui import (QIcon, QPainter, QPixmap, QRegion)
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import (qApp, QAction, QPushButton, QWidget)
+from PyQt5.QtWidgets import (qApp, QAction, QWidget)
 
 from Atoms import Atoms
+from CuriButton import CuriButton
 
 
 class Background(QWidget):
@@ -31,10 +34,20 @@ class Background(QWidget):
         region += QRegion(QRect(28 * side, 13 * side, 2 * side, 2 * side), QRegion.Ellipse)
 
         self.atoms = Atoms(self)
-        self.atoms.setGeometry(QRect(2*side, 2*side, 6*side, 6*side))
-        self.btn2 = QPushButton("OLA K ASE", self)
-        self.btn2.setGeometry(QRect(2 * side, 9 * side, 6 * side, 4 * side))
+        self.atoms.setGeometry(QRect(1.5*side, 1.5*side, 7*side, 7*side))
         self.setMask(region)
+
+        offset = QPoint(10 * side, 3 * side)
+        with open('pos.csv', 'rt') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                coordinate = QPoint(int(row[0]), int(row[1]))
+                btn = CuriButton(QSize(side, side), self)
+                btn.move(offset + coordinate * side)
+                btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
+
+        btnSound = CuriButton(QSize(2*side, 2*side), self)
+        btnSound.move(11*side, 12*side)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:

@@ -5,6 +5,8 @@ Proyecto para la enseñanza y aprendizaje de la tabla períodica
 
 ![Image of CuriElements](images/curielements.png)
 
+![Image of CuriElements](images/curielements2.png)
+
 ## Requerimientos:
 
 - Python 3.5.2
