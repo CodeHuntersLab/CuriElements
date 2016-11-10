@@ -49,8 +49,8 @@ class Background(QWidget):
                 color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
                 btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
 
-        btnSound = CuriButton(QSize(2*side, 2*side), self)
-        btnSound.move(11*side, 12*side)
+        # btnSound = CuriButton(QSize(2*side, 2*side), self)
+        # btnSound.move(11*side, 12*side)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
