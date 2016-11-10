@@ -4,5 +4,6 @@
     <file alias="background">img/background.png</file>
     <file alias="close">img/close.png</file> 
     <file alias="qt">img/qt.png</file>
+    <file alias="elements">elements.csv</file>
   </qresource>
 </RCC>

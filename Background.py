@@ -1,10 +1,7 @@
-import csv
 
-from PyQt5.QtCore import (QPoint, QRect, QSize, Qt, qrand)
-from PyQt5.QtGui import QColor
-from PyQt5.QtGui import (QIcon, QPainter, QPixmap, QRegion)
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import (qApp, QAction, QWidget)
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, qrand)
+from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
+from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 
 from Atoms import Atoms
 from CuriButton import CuriButton
@@ -39,18 +36,20 @@ class Background(QWidget):
         self.setMask(region)
 
         offset = QPoint(10 * side, 3 * side)
-        with open('pos.csv', 'rt') as f:
-            reader = csv.reader(f)
-            for row in reader:
-                coordinate = QPoint(int(row[0]), int(row[1]))
-                btn = CuriButton(QSize(side, side), self)
-                btn.move(offset + coordinate * side)
-                btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
-                color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
-                btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
+        file = QFile(":elements")
+        file.open(QFile.ReadOnly | QFile.Text)
 
-                # btnSound = CuriButton(QSize(2*side, 2*side), self)
-                # btnSound.move(11*side, 12*side)
+        while not file.atEnd():
+            x, y = file.readLine().split(',')
+            coordinate = QPoint(int(x), int(y))
+            btn = CuriButton(QSize(side, side), self)
+            btn.move(offset + coordinate * side)
+            btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
+            color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
+            btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
+
+        # btnSound = CuriButton(QSize(2*side, 2*side), self)
+        # btnSound.move(11*side, 12*side)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
