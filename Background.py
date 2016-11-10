@@ -30,12 +30,12 @@ class Background(QWidget):
         region += QRegion(QRect(9 * side, side, side, 14 * side))
         region += QRegion(QRect(8 * side, 0, 2 * side, 2 * side), QRegion.Ellipse)
         region += QRegion(QRect(10 * side, 2 * side, 19 * side, 13 * side))
-        region += QRegion(QRect(28 * side, 2*side, 2 * side, 2 * side), QRegion.Ellipse)
-        region += QRegion(QRect(29 * side, 3 * side, side, 11*side))
+        region += QRegion(QRect(28 * side, 2 * side, 2 * side, 2 * side), QRegion.Ellipse)
+        region += QRegion(QRect(29 * side, 3 * side, side, 11 * side))
         region += QRegion(QRect(28 * side, 13 * side, 2 * side, 2 * side), QRegion.Ellipse)
 
         self.atoms = Atoms(self)
-        self.atoms.setGeometry(QRect(1.5*side, 1.5*side, 7*side, 7*side))
+        self.atoms.setGeometry(QRect(1.5 * side, 1.5 * side, 7 * side, 7 * side))
         self.setMask(region)
 
         offset = QPoint(10 * side, 3 * side)
@@ -49,8 +49,8 @@ class Background(QWidget):
                 color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
                 btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
 
-        # btnSound = CuriButton(QSize(2*side, 2*side), self)
-        # btnSound.move(11*side, 12*side)
+                # btnSound = CuriButton(QSize(2*side, 2*side), self)
+                # btnSound.move(11*side, 12*side)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -68,5 +68,6 @@ class Background(QWidget):
 
     def about(self):
         QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
+
 
 import resource_rc
