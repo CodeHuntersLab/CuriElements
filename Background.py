@@ -1,13 +1,10 @@
 import os
 
-from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, qrand, pyqtSlot)
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, qrand, pyqtSlot)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
+from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
-
-from PyQt5.QtCore import (QFile, QIODevice)
-from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 
 from Atoms import Atoms
 from CuriButton import CuriButton
@@ -93,6 +90,3 @@ class Background(QWidget):
 
     def about(self):
         QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
-
-
-import resource_rc
