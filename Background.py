@@ -1,5 +1,4 @@
-
-from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, qrand)
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, qrand, pyqtSlot)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 
@@ -39,17 +38,24 @@ class Background(QWidget):
         file = QFile(":elements")
         file.open(QFile.ReadOnly | QFile.Text)
 
+        n = 0
+
         while not file.atEnd():
             x, y = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
-            btn = CuriButton(QSize(side, side), self)
+            n += 1
+            btn = CuriButton(QSize(side, side), n, self)
             btn.move(offset + coordinate * side)
             btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
             color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
             btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
-
+            btn.clicked.connect(self.button_clicked)
         # btnSound = CuriButton(QSize(2*side, 2*side), self)
         # btnSound.move(11*side, 12*side)
+
+    @pyqtSlot()
+    def button_clicked(self):
+        self.atoms.update_number(self.sender().id)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:

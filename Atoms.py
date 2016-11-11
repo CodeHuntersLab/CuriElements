@@ -23,18 +23,31 @@ class Atoms(QGraphicsView):
         @type QWidget
         """
         super(Atoms, self).__init__(parent)
-        scene = QGraphicsScene()
+        self.scene = QGraphicsScene()
+        self.scene.setSceneRect(0, 0, 150, 150)
+        self.group = QParallelAnimationGroup(self)
+        self.center = QPointF(75, 75)
 
-        scene.setSceneRect(0, 0, 150, 150)
-        n = 4
-        group = QParallelAnimationGroup(self)
+        gradient = QRadialGradient(self.center, 150)
+        gradient.setColorAt(0.9, QColor(0, 0, 0))
+        gradient.setColorAt(0.6, QColor(255, 0, 0))
+        gradient.setColorAt(0.1, QColor(0, 0, 0))
+        gradient.setColorAt(0, QColor(0, 200, 0))
+
+        self.setBackgroundBrush(QBrush(gradient))
+        self.setScene(self.scene)
+
+    def update_number(self, n):
+        self.group.stop()
+        self.group = QParallelAnimationGroup(self)
+        self.scene = QGraphicsScene()
+        self.scene.setSceneRect(0, 0, 150, 150)
         now = QTime.currentTime()
         qsrand(now.msec())
 
-        center = QPointF(75, 75)
         a, b = 75, 20
         transform = QTransform()
-        transform.translate(center.x(), center.y())
+        transform.translate(self.center.x(), self.center.y())
 
         alpha = 180 / n
 
@@ -49,7 +62,7 @@ class Atoms(QGraphicsView):
             color = QColor(qrand() % 255, qrand() % 255, qrand() % 255)
 
             transform.rotate(alpha)
-            scene.addPath(transform.map(path), QPen(color))
+            self.scene.addPath(transform.map(path), QPen(color))
 
             # number % p => 0:p-1
             initial = (qrand() % p)
@@ -60,20 +73,13 @@ class Atoms(QGraphicsView):
             animation = QPropertyAnimation(item, b'pos')
             animation.setKeyValues(l)
             animation.setDuration(2000)
-            group.addAnimation(animation)
-            scene.addItem(item)
+            self.group.addAnimation(animation)
+            self.scene.addItem(item)
 
-        group.start()
-        group.finished.connect(group.start)
-        self.setScene(scene)
+        self.group.start()
+        self.group.finished.connect(self.group.start)
 
-        gradient = QRadialGradient(center, 150)
-        gradient.setColorAt(0.9, QColor(0, 0, 0))
-        gradient.setColorAt(0.6, QColor(255, 0, 0))
-        gradient.setColorAt(0.1, QColor(0, 0, 0))
-        gradient.setColorAt(0, QColor(0, 200, 0))
-
-        self.setBackgroundBrush(QBrush(gradient))
+        self.setScene(self.scene)
 
 
 class CircleObject(QGraphicsObject):

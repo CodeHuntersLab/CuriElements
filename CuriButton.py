@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import QPushButton
 
 
 class CuriButton(QPushButton):
-    def __init__(self, size, parent=None, ):
+    def __init__(self, size, id, parent=None):
         super(CuriButton, self).__init__(parent)
+        self.id = id
         self.setFixedSize(size)
         w = size.width()
         h = size.height()
