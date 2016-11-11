@@ -90,3 +90,6 @@ class Background(QWidget):
 
     def about(self):
         QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
+
+
+import resource_rc
