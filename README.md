@@ -11,3 +11,4 @@ Proyecto para la enseñanza y aprendizaje de la tabla períodica
 
 - Python 3.5.2
 - PyQt5 5.7.2
+- gTTS 1.1.6
