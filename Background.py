@@ -1,6 +1,13 @@
+import os
+
 from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, qrand, pyqtSlot)
+from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
+from gtts import gTTS
+
+from PyQt5.QtCore import (QFile, QIODevice)
+from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 
 from Atoms import Atoms
 from CuriButton import CuriButton
@@ -9,6 +16,9 @@ from CuriButton import CuriButton
 class Background(QWidget):
     def __init__(self, parent=None):
         super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
+
+        self.player = QMediaPlayer(self,  QMediaPlayer.StreamPlayback)
+
         self.dragPosition = QPoint()
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
         quitAction = QAction("E&xit", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
@@ -41,10 +51,10 @@ class Background(QWidget):
         n = 0
 
         while not file.atEnd():
-            x, y = file.readLine().split(',')
+            x, y, text = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
             n += 1
-            btn = CuriButton(QSize(side, side), n, self)
+            btn = CuriButton(QSize(side, side), n, bytearray(text).decode(), self)
             btn.move(offset + coordinate * side)
             btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
             color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
@@ -53,9 +63,19 @@ class Background(QWidget):
         # btnSound = CuriButton(QSize(2*side, 2*side), self)
         # btnSound.move(11*side, 12*side)
 
+    def test(self, text):
+        self.player.stop()
+        filename = os.path.dirname(os.path.realpath(__file__)) + "/Curie.mp3"
+        tts = gTTS(text=text, lang='es')
+        tts.save(filename)
+        media = QMediaContent(QUrl.fromLocalFile(filename))
+        self.player.setMedia(media)
+        self.player.play()
+
     @pyqtSlot()
     def button_clicked(self):
         self.atoms.update_number(self.sender().id)
+        self.test(self.sender().text)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
