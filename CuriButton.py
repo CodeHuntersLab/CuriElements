@@ -4,11 +4,9 @@ from PyQt5.QtWidgets import QPushButton
 
 
 class CuriButton(QPushButton):
-    def __init__(self, size, id, text, parent=None):
+    def __init__(self, size, parent=None):
         super(CuriButton, self).__init__(parent)
-        self.id = id
-        self.setFixedSize(size)
-        self.text = text
+        self.setFixedSize(size)     # size = QSize(20, 30) QPoint(20, 30)
         w = size.width()
         h = size.height()
         region = QRegion(QRect(0, 0, w / 2, h / 2), QRegion.Ellipse)
@@ -18,3 +16,10 @@ class CuriButton(QPushButton):
         region += QRegion(QRect(w / 2, h / 2, w / 2, h / 2), QRegion.Ellipse)
         region += QRegion(QRect(0, h / 4, w, h / 2), QRegion.Rectangle)
         self.setMask(region)
+
+
+class ElementButton(CuriButton):
+    def __init__(self, size, number, description, parent=None):
+        super(ElementButton, self).__init__(size, parent)
+        self.number = number
+        self.description = description

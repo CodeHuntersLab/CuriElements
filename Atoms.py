@@ -69,7 +69,7 @@ class Atoms(QGraphicsView):
 
             l = [(i / (p - 1), transform.map(points[(i + initial) % p])) for i in range(p)]
 
-            item = CircleObject(color=color)
+            item = ElectronObject(color=color)
             animation = QPropertyAnimation(item, b'pos')
             animation.setKeyValues(l)
             animation.setDuration(2000)
@@ -82,9 +82,9 @@ class Atoms(QGraphicsView):
         self.setScene(self.scene)
 
 
-class CircleObject(QGraphicsObject):
+class ElectronObject(QGraphicsObject):
     def __init__(self, parent=None, color=Qt.red):
-        super(CircleObject, self).__init__(parent)
+        super(ElectronObject, self).__init__(parent)
         self.color = color
 
     def paint(self, painter, option, widget):

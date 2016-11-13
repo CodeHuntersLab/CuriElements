@@ -1,13 +1,13 @@
 import os
 
-from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, qrand, pyqtSlot)
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, qrand, pyqtSlot, qDebug)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
 from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
 
 from Atoms import Atoms
-from CuriButton import CuriButton
+from CuriButton import CuriButton, ElementButton
 
 
 class Background(QWidget):
@@ -37,9 +37,10 @@ class Background(QWidget):
         region += QRegion(QRect(29 * side, 3 * side, side, 11 * side))
         region += QRegion(QRect(28 * side, 13 * side, 2 * side, 2 * side), QRegion.Ellipse)
 
+        self.setMask(region)
+
         self.atoms = Atoms(self)
         self.atoms.setGeometry(QRect(1.5 * side, 1.5 * side, 7 * side, 7 * side))
-        self.setMask(region)
 
         offset = QPoint(10 * side, 3 * side)
         file = QFile(":elements")
@@ -51,16 +52,20 @@ class Background(QWidget):
             x, y, text = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
             n += 1
-            btn = CuriButton(QSize(side, side), n, bytearray(text).decode(), self)
+
+            btn = ElementButton(QSize(side, side), n, bytearray(text).decode(), self)
+
             btn.move(offset + coordinate * side)
             btn.setText("{}, {}".format(coordinate.x(), coordinate.y()))
             color = QColor(qrand() % 256, qrand() % 256, qrand() % 256)
             btn.setStyleSheet('background: rgb({}, {}, {});'.format(color.red(), color.green(), color.blue()))
             btn.clicked.connect(self.button_clicked)
-        # btnSound = CuriButton(QSize(2*side, 2*side), self)
-        # btnSound.move(11*side, 12*side)
 
-    def test(self, text):
+        btnSound = CuriButton(QSize(2*side, 2*side), self)
+        btnSound.move(11*side, 12*side)
+        btnSound.clicked.connect(self.player.stop)
+
+    def speak(self, text):
         self.player.stop()
         filename = os.path.dirname(os.path.realpath(__file__)) + "/Curie.mp3"
         tts = gTTS(text=text, lang='es')
@@ -71,8 +76,8 @@ class Background(QWidget):
 
     @pyqtSlot()
     def button_clicked(self):
-        self.atoms.update_number(self.sender().id)
-        self.test(self.sender().text)
+        self.atoms.update_number(self.sender().number)
+        self.speak(self.sender().description)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -91,5 +96,8 @@ class Background(QWidget):
     def about(self):
         QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
 
+    def closeEvent(self, event):
+        self.player.stop()
+        super().closeEvent(event)
 
 import resource_rc
