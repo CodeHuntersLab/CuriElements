@@ -13,9 +13,13 @@ class CuriButton(QPushButton):
                            " padding-top: -15px;padding-bottom: -17px;}}"
                            .format(img=image, cred=color.red(), cgreen=color.green(), cblue=color.blue()))
 
+    def updateBackground(self, img):
+        self.setStyleSheet("QPushButton {{background-image:url({img}); border-style: solid;}} ".format(img=img))
+
 
 class ElementButton(CuriButton):
-    def __init__(self, size, image, color, number, description, parent=None):
+    def __init__(self, size, image, color, number, symbol, description, parent=None):
         super(ElementButton, self).__init__(size, image, color, parent)
         self.number = number
+        self.symbol = symbol
         self.description = description

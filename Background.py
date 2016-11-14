@@ -2,7 +2,9 @@ import os
 
 from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, qrand, pyqtSlot, qDebug)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
+from PyQt5.QtGui import QImage
 from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
+from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
 # from wikipedia import wikipedia
@@ -14,9 +16,7 @@ from CuriButton import CuriButton, ElementButton
 class Background(QWidget):
     def __init__(self, parent=None):
         super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
-
         self.player = QMediaPlayer(self, QMediaPlayer.StreamPlayback)
-
         self.dragPosition = QPoint()
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
         quitAction = QAction("E&xit", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
@@ -63,14 +63,21 @@ class Background(QWidget):
             btn = ElementButton(QSize(side, side), ":{number}.{symbol}.0"
                                 .format(symbol=bytearray(symbol).decode(),
                                         number=bytearray(electron).decode()),
-                                QColor("#002e5b"), int(electron), text, self)
+                                QColor("#002e5b"),
+                                int(electron),
+                                bytearray(symbol).decode(),
+                                text, self)
             # btn.setText("{x}, {y}".format(x=int(x), y=int(y)))
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
-
-        btnSound = CuriButton(QSize(2 * side, 2 * side), ":soundOn", QColor("#002e5b"), self)
+        self.imageDescription = CuriButton(side * QSize(7, 4), "", QColor("#002e5b"), self)
+        self.imageDescription.move(1.5*side, 9*side)
+        btnSound = CuriButton(side*QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
         btnSound.move(11 * side, 12 * side)
         btnSound.clicked.connect(self.player.stop)
+
+    def setImage(self, image):
+        self.imageDescription.updateBackground(image)
 
     def getSymbol(self, symbol):
         return "".join([x + "," for x in symbol])
@@ -91,7 +98,9 @@ class Background(QWidget):
     @pyqtSlot()
     def button_clicked(self):
         self.atoms.update_number(self.sender().number)
-        self.speak(self.sender().description)
+        self.setImage(":{number}.{symbol}.2".format(symbol=self.sender().symbol,
+                                                    number=self.sender().number))
+        # self.speak(self.sender().description)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
