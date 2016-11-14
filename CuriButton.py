@@ -5,7 +5,7 @@ class CuriButton(QPushButton):
     def __init__(self, size, image, color, parent=None):
         super(CuriButton, self).__init__(parent)
         self.setFixedSize(size)  # size = QSize(20, 30) QPoint(20, 30)
-        # self.setFlat(True)
+        self.setFlat(True)
         self.setStyleSheet("QPushButton {{background-image:url({img}); border-style: solid;}} "
                            "QPushButton:focus {{ background-color: rgb(253, 228, 40);}}"
                            "QPushButton:hover {{ background-color: rgb({cred}, {cgreen}, {cblue});}}"
