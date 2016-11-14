@@ -4,6 +4,47 @@
     <file alias="background">img/background.png</file>
     <file alias="close">img/close.png</file> 
     <file alias="qt">img/qt.png</file>
+    <file alias="soundOn">img/soundOn.png</file>
+
+
     <file alias="elements">elements.csv</file>
+
+    <file alias="Zn.0">img/elements/Zn.0.png</file>
+    <file alias="Rb.0">img/elements/Rb.0.png</file>
+    <file alias="S.0">img/elements/S.0.png</file>
+    <file alias="O.0">img/elements/O.0.png</file>
+    <file alias="P.0">img/elements/P.0.png</file>
+    <file alias="Mg.0">img/elements/Mg.0.png</file>
+    <file alias="Se.0">img/elements/Se.0.png</file>
+    <file alias="Na.0">img/elements/Na.0.png</file>
+    <file alias="F.0">img/elements/F.0.png</file>
+    <file alias="Li.0">img/elements/Li.0.png</file>
+    <file alias="Kr.0">img/elements/Kr.0.png</file>
+    <file alias="K.0">img/elements/K.0.png</file>
+    <file alias="Ge.0">img/elements/Ge.0.png</file>
+    <file alias="Ni.0">img/elements/Ni.0.png</file>
+    <file alias="Cr.0">img/elements/Cr.0.png</file>
+    <file alias="Ar.0">img/elements/Ar.0.png</file>
+    <file alias="Be.0">img/elements/Be.0.png</file>
+    <file alias="Ti.0">img/elements/Ti.0.png</file>
+    <file alias="C.0">img/elements/C.0.png</file>
+    <file alias="B.0">img/elements/B.0.png</file>
+    <file alias="N.0">img/elements/N.0.png</file>
+    <file alias="He.0">img/elements/He.0.png</file>
+    <file alias="H.0">img/elements/H.0.png</file>
+    <file alias="Al.0">img/elements/Al.0.png</file>
+    <file alias="Cu.0">img/elements/Cu.0.png</file>
+    <file alias="Fe.0">img/elements/Fe.0.png</file>
+    <file alias="Mn.0">img/elements/Mn.0.png</file>
+    <file alias="As.0">img/elements/As.0.png</file>
+    <file alias="Ca.0">img/elements/Ca.0.png</file>
+    <file alias="Br.0">img/elements/Br.0.png</file>
+    <file alias="V.0">img/elements/V.0.png</file>
+    <file alias="Sc.0">img/elements/Sc.0.png</file>
+    <file alias="Si.0">img/elements/Si.0.png</file>
+    <file alias="Co.0">img/elements/Co.0.png</file>
+    <file alias="Ga.0">img/elements/Ga.0.png</file>
+    <file alias="Ne.0">img/elements/Ne.0.png</file>
+    <file alias="Cl.0">img/elements/Cl.0.png</file>
   </qresource>
 </RCC>

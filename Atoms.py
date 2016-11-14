@@ -30,9 +30,9 @@ class Atoms(QGraphicsView):
 
         gradient = QRadialGradient(self.center, 150)
         gradient.setColorAt(0.9, QColor(0, 0, 0))
-        gradient.setColorAt(0.6, QColor(255, 0, 0))
+        gradient.setColorAt(0.6, QColor("#002e5b"))
         gradient.setColorAt(0.1, QColor(0, 0, 0))
-        gradient.setColorAt(0, QColor(0, 200, 0))
+        gradient.setColorAt(0, QColor(253, 228, 40))
 
         self.setBackgroundBrush(QBrush(gradient))
         self.setScene(self.scene)
