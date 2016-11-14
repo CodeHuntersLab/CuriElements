@@ -6,20 +6,18 @@ class CodeHuntersBox(QMessageBox):
     def __init__(self, parent=None):
         super(CodeHuntersBox, self).__init__(parent=parent)
         self.setIconPixmap(QPixmap(":codehunters"))
-        self.setStyleSheet("QLabel{min-width:300 px;} QPushButton{ width:250px; font-size: 18px; }")
+        self.setStyleSheet("QLabel{min-width:300 px;}")
         urlgithub = 'https://github.com/CodeHuntersLab'
         urlfacebook = 'https://www.facebook.com/CodeHuntersLab'
         text = "<H1>CodeHunters Lab</H1>" \
                "<p> Comunidad que desarrolla actividades orientadas a la formación en investigación y" \
                " creación tecnológica, dirigidas a jóvenes entre 15 y 20 años.</p> " \
                "<p>Búscanos en: </p>" \
-               "<p><a href=\"{github}\"> <img src=\":github\" height=\"20\" style=\"display:inline-block\"> " \
-               "<span style=\" text-decoration: underline; color:#ff9e21;\"></p>" \
-               "<p><a href=\"{facebook}\"> <img src=\":facebook\" height=\"20\" style=\"display:inline-block\"> " \
-               "<span style=\" text-decoration: underline; color:#ff9e21;\"></p>" \
+               "<p><a href=\"{github}\"> <img src=\":github\" height=\"20\"></a></p>" \
+               "<p><a href=\"{facebook}\"> <img src=\":facebook\" height=\"20\"></a></p>" \
             .format(github=urlgithub, facebook=urlfacebook)
 
-        self.setInformativeText("Copyright: 2016 CodeHunters Lab")
+        self.setInformativeText("© 2016 CodeHunters Lab")
         self.setText(text)
         self.setWindowTitle(self.tr("Acerca de CodeHunterLab"))
 

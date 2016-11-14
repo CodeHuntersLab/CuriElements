@@ -5,7 +5,7 @@ from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
 from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
-# from wikipedia import wikipedia
+from wikipedia import wikipedia
 from AboutBox import CodeHuntersBox
 from Atoms import Atoms
 from CuriButton import CuriButton, ElementButton
@@ -27,7 +27,7 @@ class Background(QWidget):
 
         side = 40
         self.setFixedSize(side * QSize(30, 15))
-        self.setWindowIcon(QIcon(":codehunters"))
+        self.setWindowIcon(QIcon(":curielements"))
 
         region = QRegion(QRect(0, 0, 2 * side, 2 * side), QRegion.Ellipse)
         region += QRegion(QRect(side, 0, 8 * side, 15 * side))
@@ -53,11 +53,13 @@ class Background(QWidget):
             x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
 
-            text = "El {name} cuyo simbolo químico es {symbol} tiene {electron} electrones y protones. {description}" \
-                .format(name=bytearray(name).decode(),
-                        symbol=self.getSymbol(bytearray(symbol).decode()),
-                        electron=bytearray(electron).decode(),
-                        description=" ")
+            # text = "El {name} cuyo simbolo químico es {symbol} tiene {electron} electrones y protones. {description}" \
+            #     .format(name=bytearray(name).decode(),
+            #             symbol=self.getSymbol(bytearray(symbol).decode()),
+            #             electron=bytearray(electron).decode(),
+            #             description=" ")
+
+            text = bytearray(name).decode()
             btn = ElementButton(QSize(side, side), ":{number}.{symbol}.0"
                                 .format(symbol=bytearray(symbol).decode(),
                                         number=bytearray(electron).decode()),
@@ -68,8 +70,8 @@ class Background(QWidget):
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
         self.imageDescription = CuriButton(side * QSize(7, 4), "", QColor("#002e5b"), self)
-        self.imageDescription.move(1.5*side, 9*side)
-        btnSound = CuriButton(side*QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
+        self.imageDescription.move(1.5 * side, 9 * side)
+        btnSound = CuriButton(side * QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
         btnSound.move(11 * side, 12 * side)
         btnSound.clicked.connect(self.player.stop)
 
@@ -81,12 +83,13 @@ class Background(QWidget):
 
     def speak(self, name):
         self.player.stop()
-        # wikipedia.set_lang("es")
-        # text = wikipedia.summary(name)
+        wikipedia.set_lang("es")
+        text = wikipedia.summary(name, sentences=1)
         # print(text)
         filename = os.path.dirname(os.path.realpath(__file__)) + "/Curie.mp3"
         # os.remove(filename)
-        tts = gTTS(text=name, lang='es')
+        print(text)
+        tts = gTTS(text=text, lang='es')
         tts.save(filename)
         media = QMediaContent(QUrl.fromLocalFile(filename))
         self.player.setMedia(media)
@@ -97,7 +100,7 @@ class Background(QWidget):
         self.atoms.update_number(self.sender().number)
         self.setImage(":{number}.{symbol}.2".format(symbol=self.sender().symbol,
                                                     number=self.sender().number))
-        # self.speak(self.sender().description)
+        self.speak(self.sender().description)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -124,5 +127,6 @@ class Background(QWidget):
 def closeEvent(self, event):
     self.player.stop()
     super().closeEvent(event)
+
 
 import resource_rc
