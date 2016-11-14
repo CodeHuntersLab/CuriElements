@@ -5,8 +5,8 @@ from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
 from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
-from wikipedia import wikipedia
-
+# from wikipedia import wikipedia
+from AboutBox import CodeHuntersBox
 from Atoms import Atoms
 from CuriButton import CuriButton, ElementButton
 
@@ -23,6 +23,10 @@ class Background(QWidget):
         self.addAction(quitAction)
         aboutAction = QAction("A&bout", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
         self.addAction(aboutAction)
+        codehunterAction = QAction("Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
+                                   triggered=self.codehunters)
+        self.addAction(codehunterAction)
+
         side = 40
         self.setFixedSize(side * QSize(30, 15))
         self.setWindowIcon(QIcon(":codehunters"))
@@ -48,7 +52,7 @@ class Background(QWidget):
         file.open(QFile.ReadOnly | QFile.Text)
 
         while not file.atEnd():
-            x, y, name, symbol, electron, description = file.readLine().split(',')
+            x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
 
             text = "El {name} cuyo simbolo químico es {symbol} tiene {electron} electrones y protones. {description}" \
@@ -56,7 +60,9 @@ class Background(QWidget):
                         symbol=self.getSymbol(bytearray(symbol).decode()),
                         electron=bytearray(electron).decode(),
                         description=" ")
-            btn = ElementButton(QSize(side, side), ":{symbol}.0".format(symbol=bytearray(symbol).decode()),
+            btn = ElementButton(QSize(side, side), ":{number}.{symbol}.0"
+                                .format(symbol=bytearray(symbol).decode(),
+                                        number=bytearray(electron).decode()),
                                 QColor("#002e5b"), int(electron), text, self)
             # btn.setText("{x}, {y}".format(x=int(x), y=int(y)))
             btn.move(offset + coordinate * side)
@@ -104,9 +110,14 @@ class Background(QWidget):
     def about(self):
         QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
 
-    def closeEvent(self, event):
-        self.player.stop()
-        super().closeEvent(event)
+    def codehunters(self):
+        messageBox = CodeHuntersBox(self)
+        messageBox.exec_()
+
+
+def closeEvent(self, event):
+    self.player.stop()
+    super().closeEvent(event)
 
 
 import resource_rc
