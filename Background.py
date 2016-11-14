@@ -1,10 +1,8 @@
 import os
 
-from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, qrand, pyqtSlot, qDebug)
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, pyqtSlot)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
-from PyQt5.QtGui import QImage
 from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
-from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
 # from wikipedia import wikipedia
@@ -67,7 +65,6 @@ class Background(QWidget):
                                 int(electron),
                                 bytearray(symbol).decode(),
                                 text, self)
-            # btn.setText("{x}, {y}".format(x=int(x), y=int(y)))
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
         self.imageDescription = CuriButton(side * QSize(7, 4), "", QColor("#002e5b"), self)
@@ -127,6 +124,5 @@ class Background(QWidget):
 def closeEvent(self, event):
     self.player.stop()
     super().closeEvent(event)
-
 
 import resource_rc
