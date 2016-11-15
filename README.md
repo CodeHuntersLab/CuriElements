@@ -3,13 +3,13 @@ Proyecto para la enseñanza y aprendizaje de la tabla períodica
 
 ![Image of Atom](images/atom.png)
 
-![Image of CuriElements](images/curielements.png)
+![Image of CuriElements](app/resource/images/curielements.png)
 
-![Image of CuriElements](images/curielements2.png)
+![Image of CuriElements](app/resource/images/curielements2.png)
 
-![Image of CuriElements](images/curielements3.png)
+![Image of CuriElements](app/resource/images/curielements3.png)
 
-![Image of CuriElements](images/about.png)
+![Image of CuriElements](app/resource/images/about.png)
 
 ## Requerimientos:
 
