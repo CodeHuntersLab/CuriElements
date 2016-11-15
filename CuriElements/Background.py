@@ -87,6 +87,8 @@ class Background(QWidget):
 
     @pyqtSlot()
     def button_clicked(self):
+        self.player.stop()
+
         self.button = self.sender()
         self.atoms.update_number(self.button.number)
         self.imageDescription.updateBackground(":{number}.{symbol}.2".format(symbol=self.button.symbol,
