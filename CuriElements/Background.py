@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
 from wikipedia import wikipedia
 
-from app.Atoms import Atoms
-from app.CodeHuntersBox import CodeHuntersBox
-from app.CuriButton import ElementButton, CuriButton
+from CuriElements.Atoms import Atoms
+from CuriElements.CodeHuntersBox import CodeHuntersBox
+from CuriElements.CuriButton import ElementButton, CuriButton
 
 
 class Background(QWidget):
@@ -131,4 +131,4 @@ class Background(QWidget):
         self.player.stop()
         super().closeEvent(event)
 
-import app.resource_rc
+import CuriElements.resource_rc
