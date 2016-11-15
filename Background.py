@@ -6,8 +6,9 @@ from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 from gtts import gTTS
 from wikipedia import wikipedia
-from AboutBox import CodeHuntersBox
+
 from Atoms import Atoms
+from CodeHuntersBox import CodeHuntersBox
 from CuriButton import CuriButton, ElementButton
 
 
@@ -17,11 +18,11 @@ class Background(QWidget):
         self.player = QMediaPlayer(self, QMediaPlayer.StreamPlayback)
         self.dragPosition = QPoint()
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
-        quitAction = QAction("E&xit", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
+        quitAction = QAction("Salir", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
         self.addAction(quitAction)
-        aboutAction = QAction("A&bout", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
+        aboutAction = QAction("Acerca de Qt", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
         self.addAction(aboutAction)
-        codehunterAction = QAction("Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
+        codehunterAction = QAction("Acerca de Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
                                    triggered=self.codehunters)
         self.addAction(codehunterAction)
 
@@ -123,10 +124,8 @@ class Background(QWidget):
         messageBox = CodeHuntersBox(self)
         messageBox.exec_()
 
-
-def closeEvent(self, event):
-    self.player.stop()
-    super().closeEvent(event)
-
+    def closeEvent(self, event):
+        self.player.stop()
+        super().closeEvent(event)
 
 import resource_rc
