@@ -1,15 +1,15 @@
 # CuriElements
 Proyecto para la enseñanza y aprendizaje de la tabla períodica
 
-![Image of Atom](app/resource/images/atom.png)
+![Image of Atom](resource/images/atom.png)
 
-![Image of CuriElements](app/resource/images/curielements.png)
+![Image of CuriElements](resource/images/curielements.png)
 
-![Image of CuriElements](app/resource/images/curielements2.png)
+![Image of CuriElements](resource/images/curielements2.png)
 
-![Image of CuriElements](app/resource/images/curielements3.png)
+![Image of CuriElements](resource/images/curielements3.png)
 
-![Image of CuriElements](app/resource/images/about.png)
+![Image of CuriElements](resource/images/about.png)
 
 ## Requerimientos:
 
