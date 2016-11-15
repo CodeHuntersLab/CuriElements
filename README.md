@@ -13,13 +13,13 @@ Proyecto para la enseñanza y aprendizaje de la tabla períodica
 
 ## Instalación:
 ```shell
-    pip install "CuriElements"
+pip install "CuriElements"
 ```
 
 ## Uso
 ```python
-    from CuriElements.app import app
-    app()
+from CuriElements.app import app
+app()
 ```
 
 ## Requerimientos:
