@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='CuriElements',
-    version='0.1.4',
+    version='0.1.5',
     packages=['CuriElements'],
     url='https://github.com/CodeHuntersLab/CuriElements',
     license='LGPL3 GPL3',
