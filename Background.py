@@ -74,10 +74,20 @@ class Background(QWidget):
         self.imageDescription.move(1.5 * side, 9 * side)
         btnSound = CuriButton(side * QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
         btnSound.move(11 * side, 12 * side)
-        btnSound.clicked.connect(self.player.stop)
+        btnSound.clicked.connect(self.sound_clicled)
 
-    def setImage(self, image):
-        self.imageDescription.updateBackground(image)
+        self.button = None
+
+    @pyqtSlot()
+    def button_clicked(self):
+        self.button = self.sender()
+        self.atoms.update_number(self.button.number)
+        self.imageDescription.updateBackground(":{number}.{symbol}.2".format(symbol=self.button.symbol,
+                                                                             number=self.button.number))
+
+    def sound_clicled(self):
+        if self.button:
+            self.speak(self.button.description)
 
     def getSymbol(self, symbol):
         return "".join([x + "," for x in symbol])
@@ -95,13 +105,6 @@ class Background(QWidget):
         media = QMediaContent(QUrl.fromLocalFile(filename))
         self.player.setMedia(media)
         self.player.play()
-
-    @pyqtSlot()
-    def button_clicked(self):
-        self.atoms.update_number(self.sender().number)
-        self.setImage(":{number}.{symbol}.2".format(symbol=self.sender().symbol,
-                                                    number=self.sender().number))
-        self.speak(self.sender().description)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
