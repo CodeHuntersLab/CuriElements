@@ -12,6 +12,9 @@ Proyecto para la enseñanza y aprendizaje de la tabla períodica
 ![Image of CuriElements](https://github.com/CodeHuntersLab/CuriElements/raw/master/resource/images/about.png)
 
 ## Instalación:
+
+Descargar e instalar PyQt5 desde [Aquí](https://www.riverbankcomputing.com/software/pyqt/download5)
+
 ```shell
 pip install "CuriElements"
 ```
