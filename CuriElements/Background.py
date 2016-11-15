@@ -1,4 +1,5 @@
-import os
+from os import remove
+from os.path import expanduser
 
 from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, pyqtSlot)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
@@ -17,14 +18,8 @@ class Background(QWidget):
         super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
         self.player = QMediaPlayer(self, QMediaPlayer.StreamPlayback)
         self.dragPosition = QPoint()
-        self.setContextMenuPolicy(Qt.ActionsContextMenu)
-        quitAction = QAction("Salir", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
-        self.addAction(quitAction)
-        aboutAction = QAction("Acerca de Qt", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
-        self.addAction(aboutAction)
-        codehunterAction = QAction("Acerca de Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
-                                   triggered=self.codehunters)
-        self.addAction(codehunterAction)
+        self.filename = ""
+        self.button = None
 
         side = 40
         self.setFixedSize(side * QSize(30, 15))
@@ -54,7 +49,8 @@ class Background(QWidget):
             x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
 
-            # text = "El {name} cuyo simbolo químico es {symbol} tiene {electron} electrones y protones. {description}" \
+            # text = "El {name} cuyo simbolo químico es {symbol} tiene {electron}
+            #  electrones y protones. {description}" \
             #     .format(name=bytearray(name).decode(),
             #             symbol=self.getSymbol(bytearray(symbol).decode()),
             #             electron=bytearray(electron).decode(),
@@ -70,13 +66,24 @@ class Background(QWidget):
                                 text, self)
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
+
         self.imageDescription = CuriButton(side * QSize(7, 4), "", QColor("#002e5b"), self)
         self.imageDescription.move(1.5 * side, 9 * side)
         btnSound = CuriButton(side * QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
         btnSound.move(11 * side, 12 * side)
         btnSound.clicked.connect(self.sound_clicled)
 
-        self.button = None
+        self.addCustomAction()
+
+    def addCustomAction(self):
+        self.setContextMenuPolicy(Qt.ActionsContextMenu)
+        quitAction = QAction("Salir", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
+        self.addAction(quitAction)
+        aboutAction = QAction("Acerca de Qt", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
+        self.addAction(aboutAction)
+        codehunterAction = QAction("Acerca de Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
+                                   triggered=self.codehunters)
+        self.addAction(codehunterAction)
 
     @pyqtSlot()
     def button_clicked(self):
@@ -96,13 +103,11 @@ class Background(QWidget):
         self.player.stop()
         wikipedia.set_lang("es")
         text = wikipedia.summary(name, sentences=1)
-        # print(text)
-        filename = os.path.dirname(os.path.realpath(__file__)) + "/Curie.mp3"
-        # os.remove(filename)
-        print(text)
+        home = expanduser("~")
+        self.filename = home + "/Curie.mp3"
         tts = gTTS(text=text, lang='es')
-        tts.save(filename)
-        media = QMediaContent(QUrl.fromLocalFile(filename))
+        tts.save(self.filename)
+        media = QMediaContent(QUrl.fromLocalFile(self.filename))
         self.player.setMedia(media)
         self.player.play()
 
@@ -129,6 +134,7 @@ class Background(QWidget):
 
     def closeEvent(self, event):
         self.player.stop()
+        remove(self.filename)
         super().closeEvent(event)
 
 import CuriElements.resource_rc

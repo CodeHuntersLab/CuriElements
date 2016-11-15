@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import QApplication
 
 from CuriElements.Background import Background
 
-if __name__ == '__main__':
+
+def app():
     import sys
 
     app = QApplication(sys.argv)
@@ -21,3 +22,7 @@ if __name__ == '__main__':
     w = Background()
     w.show()
     sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    app()

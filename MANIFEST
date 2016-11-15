@@ -4,7 +4,6 @@ CuriElements/Atoms.py
 CuriElements/Background.py
 CuriElements/CodeHuntersBox.py
 CuriElements/CuriButton.py
-CuriElements/Curie.mp3
 CuriElements/__init__.py
-CuriElements/main.py
+CuriElements/app.py
 CuriElements/resource_rc.py
