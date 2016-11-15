@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""
-Module implementing Atoms.
-"""
 from math import pi, cos, sin
 
 from PyQt5.QtCore import (QParallelAnimationGroup, QPointF, QPropertyAnimation, QRectF, Qt, qrand, qsrand, QTime)
@@ -11,17 +6,7 @@ from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QGraphicsView)
 
 
 class Atoms(QGraphicsView):
-    """
-    Class documentation goes here.
-    """
-
     def __init__(self, parent=None):
-        """
-        Constructor
-        
-        @param parent reference to the parent widget
-        @type QWidget
-        """
         super(Atoms, self).__init__(parent)
         self.scene = QGraphicsScene()
         self.scene.setSceneRect(0, 0, 150, 150)
