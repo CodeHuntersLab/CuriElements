@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import QApplication
 
-from Background import Background
+from app.Background import Background
 
 if __name__ == '__main__':
     import sys
