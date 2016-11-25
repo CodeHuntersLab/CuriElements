@@ -10,7 +10,7 @@ from wikipedia import wikipedia
 
 from CuriElements.Atoms import Atoms
 from CuriElements.CodeHuntersBox import CodeHuntersBox
-from CuriElements.CuriButton import ElementButton, CuriButton
+from CuriElements.CuriButton import ElementButton, CuriButton, DescriptionButton
 
 
 class Background(QWidget):
@@ -44,6 +44,9 @@ class Background(QWidget):
         offset = QPoint(10 * side, 3 * side)
         file = QFile(":elements")
         file.open(QFile.ReadOnly | QFile.Text)
+        blue = QColor("#002e5b")
+        yellow = QColor("#fde428")
+        colors = [blue, yellow]
 
         while not file.atEnd():
             x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
@@ -57,22 +60,20 @@ class Background(QWidget):
             #             description=" ")
 
             text = bytearray(name).decode()
-            btn = ElementButton(QSize(side, side), ":{number}.{symbol}.0"
-                                .format(symbol=bytearray(symbol).decode(),
-                                        number=bytearray(electron).decode()),
-                                QColor("#002e5b"),
+            btn = ElementButton(QSize(side, side),
+                                colors,
                                 int(electron),
                                 bytearray(symbol).decode(),
                                 text, self)
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
 
-        self.imageDescription = CuriButton(side * QSize(7, 4), "", QColor("#002e5b"), self)
+        self.imageDescription = DescriptionButton(side * QSize(7, 4), blue, self)
         self.imageDescription.move(1.5 * side, 9 * side)
-        btnSound = CuriButton(side * QSize(2, 2), ":soundOn", QColor("#002e5b"), self)
+        btnSound = DescriptionButton(side * QSize(2, 2), blue, self)
         btnSound.move(11 * side, 12 * side)
+        btnSound.updateBackground(":soundOn")
         btnSound.clicked.connect(self.sound_clicled)
-
         self.addCustomAction()
 
     def addCustomAction(self):
