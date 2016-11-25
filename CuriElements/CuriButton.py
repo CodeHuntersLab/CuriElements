@@ -1,9 +1,6 @@
-from PyQt5.QtCore import QRect
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
-from PyQt5.QtGui import QFontDatabase
-from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtCore import (QRect, QSize, Qt)
+from PyQt5.QtGui import (QFont, QFontDatabase, QIcon, QPainter)
+from PyQt5.QtWidgets import (QPushButton, )
 
 
 class CuriButton(QPushButton):
@@ -24,8 +21,8 @@ class ElementButton(CuriButton):
         self.number = number
         self.symbol = symbol
         self.description = description
-        id = QFontDatabase.addApplicationFont(":YanoneKaffeesatz-Regular")
-        self.family = QFontDatabase.applicationFontFamilies(id)[0]
+        id_font = QFontDatabase.addApplicationFont(":YanoneKaffeesatz-Regular")
+        self.family = QFontDatabase.applicationFontFamilies(id_font)[0]
 
     def paintEvent(self, event):
         super().paintEvent(event)
@@ -47,4 +44,6 @@ class DescriptionButton(CuriButton):
         super(DescriptionButton, self).__init__(size, [color, color], parent)
 
     def updateBackground(self, img):
-        self.setStyleSheet("QPushButton {{background-image:url({img}); border-style: solid;}} ".format(img=img))
+        icon = QIcon(img)
+        self.setIcon(icon)
+        self.setIconSize(QSize(self.width(), self.height()))

@@ -10,7 +10,7 @@ from wikipedia import wikipedia
 
 from CuriElements.Atoms import Atoms
 from CuriElements.CodeHuntersBox import CodeHuntersBox
-from CuriElements.CuriButton import ElementButton, CuriButton, DescriptionButton
+from CuriElements.CuriButton import ElementButton, DescriptionButton
 
 
 class Background(QWidget):
@@ -21,7 +21,10 @@ class Background(QWidget):
         self.filename = ""
         self.button = None
 
-        side = 40
+        w = qApp.desktop().screenGeometry().width()
+        h = qApp.desktop().screenGeometry().height()
+
+        side = round((8 / 9) * min(w / 30, h / 15))
         self.setFixedSize(side * QSize(30, 15))
         self.setWindowIcon(QIcon(":curielements"))
 
@@ -60,7 +63,7 @@ class Background(QWidget):
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
 
-        self.imageDescription = DescriptionButton(side * QSize(7, 4), blue, self)
+        self.imageDescription = DescriptionButton(side * QSize(7, 4.5), blue, self)
         self.imageDescription.move(1.5 * side, 9 * side)
         btnSound = DescriptionButton(side * QSize(2, 2), blue, self)
         btnSound.move(11 * side, 12 * side)
