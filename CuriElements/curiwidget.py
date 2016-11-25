@@ -9,9 +9,9 @@ from CuriElements.cuributton import (ElementButton, DescriptionButton)
 from CuriElements.soundthread import SoundThread
 
 
-class Background(QWidget):
+class CuriWidget(QWidget):
     def __init__(self, parent=None):
-        super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
+        super(CuriWidget, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
 
         self.thread = SoundThread(self)
         self.dragPosition = QPoint()

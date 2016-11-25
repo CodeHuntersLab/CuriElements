@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import QApplication
 
-from CuriElements.background import Background
+from CuriElements.curiwidget import CuriWidget
 
 
 def app():
@@ -19,7 +19,7 @@ def app():
     app.setOrganizationName('CodeHuntersLab')
     app.setOrganizationDomain('CodeHuntersLab.com')
     app.setApplicationVersion('1.0')
-    w = Background()
+    w = CuriWidget()
     w.show()
     sys.exit(app.exec_())
 
