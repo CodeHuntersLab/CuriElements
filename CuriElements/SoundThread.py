@@ -14,8 +14,6 @@ class SoundThread(QThread):
         self.filename = home + "/Curie.mp3"
         wikipedia.set_lang("es")
         self.player = QMediaPlayer(None, QMediaPlayer.StreamPlayback)
-        media = QMediaContent(QUrl.fromLocalFile(self.filename))
-        self.player.setMedia(media)
 
     def setName(self, name):
         self.name = name
@@ -26,7 +24,13 @@ class SoundThread(QThread):
         try:
             text = wikipedia.summary(self.name + " químico", sentences=1)
             tts = gTTS(text=text, lang='es')
+            print(text)
             tts.save(self.filename)
+            media = QMediaContent(QUrl.fromLocalFile(self.filename))
+            self.player.setMedia(media)
             self.player.play()
         except wikipedia.DisambiguationError as e:
             print(e.options)
+
+    def stop(self):
+        self.player.stop()

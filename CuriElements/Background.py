@@ -49,7 +49,7 @@ class Background(QWidget):
         colors = [blue, yellow]
 
         while not file.atEnd():
-            x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
+            x, y, name, symbol, electron, description, description2, _ = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
             text = bytearray(name).decode()
             btn = ElementButton(QSize(side, side),
@@ -93,6 +93,7 @@ class Background(QWidget):
         return "".join([x + "," for x in symbol])
 
     def speak(self, name):
+        self.thread.stop()
         self.thread.quit()
         self.thread.wait()
         qApp.processEvents()
