@@ -7,7 +7,7 @@
 
 from PyQt5.QtWidgets import QApplication
 
-from CuriElements.Background import Background
+from CuriElements.background import Background
 
 
 def app():

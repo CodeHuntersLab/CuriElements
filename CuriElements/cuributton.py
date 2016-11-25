@@ -9,7 +9,7 @@ class CuriButton(QPushButton):
         self.setFixedSize(size)  # size = QSize(20, 30) QPoint(20, 30)
         self.setFlat(True)
         self.setStyleSheet("QPushButton {{background-color:{ncolor}; border-radius: 2px; border: 4px solid #00000000;}}"
-                           "QPushButton:focus {{ background-color:{ncolor};border: 4px solid {pcolor}}}"
+                           "QPushButton:focus {{ background-color:{ncolor};border: 2px solid {pcolor}}}"
                            "QPushButton:pressed {{background-color: {ncolor};}}"
                            "QPushButton:hover {{ background-color: {pcolor};}}"
                            .format(ncolor=colors[0].name(), pcolor=colors[1].name()))

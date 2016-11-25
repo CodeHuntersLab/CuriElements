@@ -1,10 +1,12 @@
 from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, pyqtSlot)
-from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
+from PyQt5.QtGui import (QIcon, QPainter, QPixmap, QRegion)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
-from CuriElements.Atoms import Atoms
-from CuriElements.CodeHuntersBox import CodeHuntersBox
-from CuriElements.CuriButton import ElementButton, DescriptionButton
-from CuriElements.SoundThread import SoundThread
+
+from CuriElements.atoms import Atoms
+from CuriElements.codehuntersBox import CodeHuntersBox
+from CuriElements.constants import blue, yellow, rows, cols
+from CuriElements.cuributton import ElementButton, DescriptionButton
+from CuriElements.soundthread import SoundThread
 
 
 class Background(QWidget):
@@ -14,9 +16,6 @@ class Background(QWidget):
         self.thread = SoundThread(self)
         self.dragPosition = QPoint()
         self.button = None
-
-        rows = 15
-        cols = 30
 
         w = qApp.desktop().screenGeometry().width()
         h = qApp.desktop().screenGeometry().height()
@@ -44,8 +43,6 @@ class Background(QWidget):
         offset = QPoint(10 * side, 3 * side)
         file = QFile(":elements")
         file.open(QFile.ReadOnly | QFile.Text)
-        blue = QColor("#002e5b")
-        yellow = QColor("#fde428")
         colors = [blue, yellow]
 
         while not file.atEnd():
@@ -122,6 +119,7 @@ class Background(QWidget):
         messageBox.exec_()
 
     def closeEvent(self, event):
+        self.atoms.stop()
         self.thread.quit()
         self.thread.wait()
         # remove(self.filename)

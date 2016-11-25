@@ -66,6 +66,9 @@ class Atoms(QGraphicsView):
 
         self.setScene(self.scene)
 
+    def stop(self):
+        self.group.stop()
+
 
 class ElectronObject(QGraphicsObject):
     def __init__(self, parent=None, color=Qt.red):
