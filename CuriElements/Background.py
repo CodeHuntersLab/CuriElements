@@ -21,11 +21,14 @@ class Background(QWidget):
         self.filename = ""
         self.button = None
 
+        rows = 15
+        cols = 30
+
         w = qApp.desktop().screenGeometry().width()
         h = qApp.desktop().screenGeometry().height()
 
-        side = round((8 / 9) * min(w / 30, h / 15))
-        self.setFixedSize(side * QSize(30, 15))
+        side = round((8 / 9) * min(w / cols, h / rows))
+        self.setFixedSize(side * QSize(cols, rows))
         self.setWindowIcon(QIcon(":curielements"))
 
         region = QRegion(QRect(0, 0, 2 * side, 2 * side), QRegion.Ellipse)
