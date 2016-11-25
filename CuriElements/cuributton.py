@@ -31,12 +31,13 @@ class ElementButton(CuriButton):
         painter = QPainter(self)
         painter.setPen(Qt.white)
 
-        painter.setFont(QFont(self.family, height/2))
-        painter.drawText(QRect(width/6, height/5, 7*width/10, 7*height/10),
+        painter.setFont(QFont(self.family, height / 2))
+        painter.drawText(QRect(width / 6, height / 5, 7 * width / 10, 7 * height / 10),
                          Qt.AlignBottom | Qt.AlignRight, self.symbol)
 
-        painter.setFont(QFont(":pokemonSolid", height /6))
-        painter.drawText(QRect(width/10, height/10, 7*width/10, height/2), Qt.AlignTop|Qt.AlignLeft, str(self.number))
+        painter.setFont(QFont(":pokemonSolid", height / 6))
+        painter.drawText(QRect(width / 10, height / 10, 7 * width / 10, height / 2), Qt.AlignTop | Qt.AlignLeft,
+                         str(self.number))
 
 
 class DescriptionButton(CuriButton):

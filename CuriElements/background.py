@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
 
 from CuriElements.atoms import Atoms
 from CuriElements.codehuntersBox import CodeHuntersBox
-from CuriElements.constants import blue, yellow, rows, cols
-from CuriElements.cuributton import ElementButton, DescriptionButton
+from CuriElements.constants import (blue, yellow, rows, cols)
+from CuriElements.cuributton import (ElementButton, DescriptionButton)
 from CuriElements.soundthread import SoundThread
 
 

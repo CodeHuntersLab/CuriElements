@@ -4,6 +4,8 @@ from PyQt5.QtCore import (QParallelAnimationGroup, QPointF, QPropertyAnimation, 
 from PyQt5.QtGui import (QBrush, QColor, QPen, QPainterPath, QTransform, QRadialGradient)
 from PyQt5.QtWidgets import (QGraphicsObject, QGraphicsScene, QGraphicsView)
 
+from CuriElements.constants import blue, yellow
+
 
 class Atoms(QGraphicsView):
     def __init__(self, parent=None):
@@ -15,9 +17,9 @@ class Atoms(QGraphicsView):
 
         gradient = QRadialGradient(self.center, 150)
         gradient.setColorAt(0.9, QColor(0, 0, 0))
-        gradient.setColorAt(0.6, QColor("#002e5b"))
+        gradient.setColorAt(0.6, blue)
         gradient.setColorAt(0.1, QColor(0, 0, 0))
-        gradient.setColorAt(0, QColor("#fde428"))
+        gradient.setColorAt(0, yellow)
 
         self.setBackgroundBrush(QBrush(gradient))
         self.setScene(self.scene)
