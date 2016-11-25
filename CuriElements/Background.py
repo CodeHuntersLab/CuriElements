@@ -1,24 +1,18 @@
-from os import remove
-from os.path import expanduser
-
-from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, QUrl, pyqtSlot)
+from PyQt5.QtCore import (QFile, QPoint, QRect, QSize, Qt, pyqtSlot)
 from PyQt5.QtGui import (QIcon, QColor, QPainter, QPixmap, QRegion)
-from PyQt5.QtMultimedia import (QMediaContent, QMediaPlayer)
 from PyQt5.QtWidgets import (qApp, QAction, QMessageBox, QWidget)
-from gtts import gTTS
-from wikipedia import wikipedia
-
 from CuriElements.Atoms import Atoms
 from CuriElements.CodeHuntersBox import CodeHuntersBox
 from CuriElements.CuriButton import ElementButton, DescriptionButton
+from CuriElements.SoundThread import SoundThread
 
 
 class Background(QWidget):
     def __init__(self, parent=None):
         super(Background, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
-        self.player = QMediaPlayer(self, QMediaPlayer.StreamPlayback)
+
+        self.thread = SoundThread(self)
         self.dragPosition = QPoint()
-        self.filename = ""
         self.button = None
 
         rows = 15
@@ -86,8 +80,6 @@ class Background(QWidget):
 
     @pyqtSlot()
     def button_clicked(self):
-        self.player.stop()
-
         self.button = self.sender()
         self.atoms.update_number(self.button.number)
         self.imageDescription.updateBackground(":{number}.{symbol}.2".format(symbol=self.button.symbol,
@@ -101,16 +93,11 @@ class Background(QWidget):
         return "".join([x + "," for x in symbol])
 
     def speak(self, name):
-        self.player.stop()
-        wikipedia.set_lang("es")
-        text = wikipedia.summary(name, sentences=1)
-        home = expanduser("~")
-        self.filename = home + "/Curie.mp3"
-        tts = gTTS(text=text, lang='es')
-        tts.save(self.filename)
-        media = QMediaContent(QUrl.fromLocalFile(self.filename))
-        self.player.setMedia(media)
-        self.player.play()
+        self.thread.quit()
+        self.thread.wait()
+        qApp.processEvents()
+        self.thread.setName(name)
+        self.thread.start()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -134,8 +121,9 @@ class Background(QWidget):
         messageBox.exec_()
 
     def closeEvent(self, event):
-        self.player.stop()
-        remove(self.filename)
+        self.thread.quit()
+        self.thread.wait()
+        # remove(self.filename)
         super().closeEvent(event)
 
 import CuriElements.resource_rc
