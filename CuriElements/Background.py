@@ -51,14 +51,6 @@ class Background(QWidget):
         while not file.atEnd():
             x, y, name, symbol, electron, description, description2 = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
-
-            # text = "El {name} cuyo simbolo químico es {symbol} tiene {electron}
-            #  electrones y protones. {description}" \
-            #     .format(name=bytearray(name).decode(),
-            #             symbol=self.getSymbol(bytearray(symbol).decode()),
-            #             electron=bytearray(electron).decode(),
-            #             description=" ")
-
             text = bytearray(name).decode()
             btn = ElementButton(QSize(side, side),
                                 colors,
