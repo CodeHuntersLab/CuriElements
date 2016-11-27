@@ -6,13 +6,14 @@
 """
 
 from PyQt5.QtWidgets import QApplication
+import sys
+
+sys.path.insert(0, "../")
 
 from CuriElements.curiwidget import CuriWidget
 
 
 def app():
-    import sys
-
     app = QApplication(sys.argv)
     app.setApplicationName('CuriElements')
     app.setApplicationDisplayName('CuriElements')
