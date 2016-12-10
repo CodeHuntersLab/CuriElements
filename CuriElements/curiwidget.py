@@ -12,16 +12,17 @@ from CuriElements.soundthread import SoundThread
 class CuriWidget(QWidget):
     def __init__(self, parent=None):
         super(CuriWidget, self).__init__(parent, Qt.FramelessWindowHint | Qt.WindowSystemMenuHint)
-
-        self.thread = SoundThread(self)
-        self.dragPosition = QPoint()
-        self.button = None
-
+        self.addCustomAction()
         w = qApp.desktop().screenGeometry().width()
         h = qApp.desktop().screenGeometry().height()
 
         side = round((8 / 9) * min(w / cols, h / rows))
         self.setFixedSize(side * QSize(cols, rows))
+
+        self.thread = SoundThread(self)
+        self.dragPosition = QPoint()
+        self.button = None
+
         self.setWindowIcon(QIcon(":curielements"))
 
         region = QRegion(QRect(0, 0, 2 * side, 2 * side), QRegion.Ellipse)
@@ -44,7 +45,7 @@ class CuriWidget(QWidget):
         file = QFile(":elements")
         file.open(QFile.ReadOnly | QFile.Text)
         colors = [blue, yellow]
-
+        self.btns = []
         while not file.atEnd():
             x, y, name, symbol, electron, description, description2, _ = file.readLine().split(',')
             coordinate = QPoint(int(x), int(y))
@@ -56,24 +57,23 @@ class CuriWidget(QWidget):
                                 text, self)
             btn.move(offset + coordinate * side)
             btn.clicked.connect(self.button_clicked)
-
+            self.btns.append(btn)
         self.imageDescription = DescriptionButton(side * QSize(7, 4.5), blue, self)
         self.imageDescription.move(1.5 * side, 9 * side)
         btnSound = DescriptionButton(side * QSize(2, 2), blue, self)
         btnSound.move(11 * side, 12 * side)
         btnSound.updateBackground(":soundOn")
         btnSound.clicked.connect(self.sound_clicled)
-        self.addCustomAction()
 
     def addCustomAction(self):
         self.setContextMenuPolicy(Qt.ActionsContextMenu)
-        quitAction = QAction("Salir", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
-        self.addAction(quitAction)
-        aboutAction = QAction("Acerca de Qt", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
-        self.addAction(aboutAction)
-        codehunterAction = QAction("Acerca de Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
+        self.quitAction = QAction("Salir", self, icon=QIcon(":close"), shortcut="Ctrl+Q", triggered=qApp.quit)
+        self.addAction(self.quitAction)
+        self.aboutAction = QAction("Acerca de Qt", self, icon=QIcon(":qt"), shortcut="Ctrl+A", triggered=self.about)
+        self.addAction(self.aboutAction)
+        self.codehunterAction = QAction("Acerca de Codehunters", self, icon=QIcon(":codehunters"), shortcut="Ctrl+I",
                                    triggered=self.codehunters)
-        self.addAction(codehunterAction)
+        self.addAction(self.codehunterAction)
 
     @pyqtSlot()
     def button_clicked(self):
@@ -112,17 +112,14 @@ class CuriWidget(QWidget):
         painter.drawPixmap(self.rect(), QPixmap(":background"))
 
     def about(self):
-        QMessageBox.aboutQt(self, self.tr("Acerca de Qt"))
+        QMessageBox.aboutQt(None, self.tr("Acerca de Qt"))
 
     def codehunters(self):
         messageBox = CodeHuntersBox(self)
         messageBox.exec_()
+        messageBox.deleteLater()
 
     def closeEvent(self, event):
-        self.atoms.stop()
-        self.thread.quit()
-        self.thread.wait()
-        # remove(self.filename)
         super().closeEvent(event)
 
 import CuriElements.resource_rc

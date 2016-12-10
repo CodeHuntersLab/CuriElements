@@ -10,11 +10,10 @@ from CuriElements.constants import blue, yellow
 class Atoms(QGraphicsView):
     def __init__(self, parent=None):
         super(Atoms, self).__init__(parent)
-        self.scene = QGraphicsScene()
+        self.scene = QGraphicsScene(self)
         self.scene.setSceneRect(0, 0, 150, 150)
         self.group = QParallelAnimationGroup(self)
         self.center = QPointF(75, 75)
-
         gradient = QRadialGradient(self.center, 150)
         gradient.setColorAt(0.9, QColor(0, 0, 0))
         gradient.setColorAt(0.6, blue)
@@ -22,12 +21,13 @@ class Atoms(QGraphicsView):
         gradient.setColorAt(0, yellow)
 
         self.setBackgroundBrush(QBrush(gradient))
+        self.setCacheMode(QGraphicsView.CacheBackground)
         self.setScene(self.scene)
 
     def update_number(self, n):
         self.group.stop()
         self.group = QParallelAnimationGroup(self)
-        self.scene = QGraphicsScene()
+        self.scene = QGraphicsScene(self)
         self.scene.setSceneRect(0, 0, 150, 150)
         now = QTime.currentTime()
         qsrand(now.msec())
@@ -70,6 +70,10 @@ class Atoms(QGraphicsView):
 
     def stop(self):
         self.group.stop()
+
+    def closeEvent(self, event):
+        self.stop()
+        super().closeEvent(event)
 
 
 class ElectronObject(QGraphicsObject):
